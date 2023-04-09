@@ -1,0 +1,30 @@
+#main {
+  font-family: "Poppins", sans-serif;
+  padding: 80px;
+  display: grid;
+  place-items: start;
+}
+#main .form {
+  width: 40%;
+  display: grid;
+  place-items: center;
+}
+#main .form label {
+  justify-self: start;
+}
+#main .form input,
+#main .form textarea {
+  width: 100%;
+}
+#main .form #submit_btn,
+#main .form .patch_post,
+#main .form .delete_post {
+  width: 100px;
+  margin-top: 30px;
+  background-color: lightblue;
+  border: none;
+  justify-self: start;
+  padding: 10px;
+}
+
+/*# sourceMappingURL=style.css.map */
