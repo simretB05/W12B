@@ -1,7 +1,19 @@
-// POST REquest
+
 // selected an html element to display the success of the post operation
 let get_main = document.querySelector( `#main` )
 
+// POST REquest
+//added a success function if response for POST request is successful and show a message
+function success( response ){
+        
+    get_main.insertAdjacentHTML( `afterbegin`, `<h3>Your Post request is recived</h3>` )
+    console.log(response)
+}
+// failure function to display if the resturned data is not proper for
+//  many http request falior resons
+function failure(error) {
+    get_main.insertAdjacentHTML( `afterbegin`, `<h3>try again</h3>` )
+}
 function sendComment( details ){
 //selected all the input elements using querySelector and got
 //  there value using the value attribute for inputs
@@ -12,17 +24,6 @@ function sendComment( details ){
     let id= document.getElementById(`id_input`)
     let id_value = id[`value`]
 
-//added a success function if response for POST request is successful and show a message
-    function success( response ){
-        
-        get_main.insertAdjacentHTML( `afterbegin`, `<h3>Your Post request is recived</h3>` )
-        console.log(response)
-    }
-// failure function to display if the resturned data is not proper for
-//  many http request falior resons
-function failure(error) {
-        get_main.insertAdjacentHTML( `afterbegin`, `<h3>try again</h3>` )
-    }
 // used axios get method to POST data to the testing API
     axios.request({
         url: `https://jsonplaceholder.typicode.com/posts`,
@@ -40,19 +41,21 @@ let submit_btn = document.querySelector( `#submit_btn` )
 submit_btn.addEventListener( `click`, sendComment )
     
 
+
 // PATCH REquest
+function successPatch(response ){
+    get_main.insertAdjacentHTML(`afterbegin`,`<h3>Your Patch request is recived</h3>`)
+}
+// added a falurPatch function if the response didnt come for many resons
+function failurePatch(error) {
+    get_main.insertAdjacentHTML( `afterbegin`, `<h3>try again</h3>` )
+}
 //added a patchPost function if response for POST request is successful and show a message 
 // selected the title_value to update the existing title_value value in the poast API
 function patchPost( details ){
     let title_value = title_input[`value`]
 
-    function successPatch(response ){
-        get_main.insertAdjacentHTML(`afterbegin`,`<h3>Your Patch request is recived</h3>`)
-    }
-    // added a falurPatch function if the response didnt come for many resons
-    function failurePatch(error) {
-    get_main.insertAdjacentHTML( `afterbegin`, `<h3>try again</h3>` )
-    }
+   
     //used axios to send a PATCH method to the testing API 
     axios.request({
         url: `https://jsonplaceholder.typicode.com/posts/1`,
@@ -60,10 +63,10 @@ function patchPost( details ){
         data: {
             title: title_value,
            
-}
-}).then(successPatch).catch(failurePatch);
+        }
+        }).then(successPatch).catch(failurePatch);
 
-}
+    }
 
 // used  event-listener to send the Patch request with a button
 let patch_btn = document.querySelector(`.patch_post` )
