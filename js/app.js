@@ -1,11 +1,11 @@
 
-// selected an html element to display the success of the post operation
-let get_main = document.querySelector( `#main` )
 
-// POST REquest
+
+//POST REquest
 //added a success function if response for POST request is successful and show a message
 function success( response ){
-        
+      //  selected an html element to display the success of the post operation
+let get_main = document.querySelector( `#main` )
     get_main.insertAdjacentHTML( `afterbegin`, `<h3>Your Post request is recived</h3>` )
     console.log(response)
 }
@@ -125,26 +125,60 @@ axios.request({
 
 //GET REquest for comments inside post 
 function successPostComments(response) {
-    for (let i = 0; i < response.data.length; i++) {
+    for ( let i = 0; i < response.data.length; i++ ){
+        // selected an html element to display the success of the post operation
+        let get_main = document.querySelector( `#main` )
+
       get_main.insertAdjacentHTML(`afterbegin`,
-        `<h3>${response.data[i][`title`]}</h3>
-        <p>${response.data[i][`body`]}</p>`
+        `<div class="main-card"><h3>${response.data[i][`title`]}</h3>
+        <p>${response.data[i][`body`]}</p></div>`
       );
-      for (let x = 0; x < response[`data`][i].length; x++) {
-        get_main.insertAdjacentHTML(`afterbegin`,
-            `<h3>${ response.data[i][`comments`][`name`] }</h3>
-            <p>${response.data[i][`comments`][`email`]}</p>
-            <p>${response.data[i][`comments`][x][`body`] }</p>
-            <p>${response.data[i][`comments`][x][`id`] }</p>`
-        );
-      }
+      
+        //GET REquest 
+        // used the successGet function to loop through 
+        // the response data aray and display the result dynamically
+        function successGetTwo( response ){
+            // selected an html element to display the success of the post operation
+            for ( let x = 0; x < response[`data`].length; x++ )
+            {
+                let get_mainCard = document.querySelector( `.main-card` )
+
+                get_mainCard.insertAdjacentHTML( `beforeend`,
+                `<div><h3>${response.data[x][`name`]}</h3>
+                <p>${ response.data[x][`email`]}</p>
+                <p>${ response.data[x][`body`]}</p>
+                <p>${ response.data[x][`id`]}</p></div>` )
+            }
     }
+    
+       // failureGet function to display if the resturned data is not proper for many http request falior resons
+        function failureGetTwo( error ){
+      // selected an html element to display the success of the post operation
+        let get_main = document.querySelector( `#main` )
+
+        get_main.insertAdjacentHTML( `afterbegin`, `<h3>try again</h3>` )
+    }
+            //  used axios to get a post data using get  jasonplaceholder test API
+        axios.request({
+            url: `https://jsonplaceholder.typicode.com/posts/1/comments/`,
+        
+            
+        } ).then( successGetTwo ).catch( failureGetTwo ); 
+                
+            }
+            }
+        
+        
+        function failurePostComments( error )
+        {
+      // selected an html element to display the success of the post operation
+        let get_main = document.querySelector( `#main` )
+
+        get_main.insertAdjacentHTML( `afterbegin`, `<h3> try again</h3>` );
   }
   
-  function failurePostComments(error) {
-      get_main.insertAdjacentHTML( `afterbegin`, `<h3> try again</h3>` );
-  }
-  
-  axios.request({
-    url: `https://jsonplaceholder.typicode.com/posts/1/comments/`,
-  }).then(successPostComments).catch(failurePostComments);
+        axios.request({
+            url: `https://jsonplaceholder.typicode.com/posts/`,
+        } ).then( successPostComments ).catch( failurePostComments );
+        
+       
